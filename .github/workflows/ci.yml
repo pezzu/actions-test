@@ -3,9 +3,9 @@ name: CI
 on:
     push:
         branches:
-            - main
+            - "main"
         tags:
-            - v*
+            - "*"
 
 env:
     REGISTRY: ghcr.io
