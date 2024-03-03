@@ -1,0 +1,30 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+
+env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Extract metadata for Docker
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+            - name: Build and push
+              run: |
+                  echo ${{ steps.meta.outputs.tags }}
+                  echo ${{ steps.meta.outputs.labels }}
+                  echo ${{ steps.meta.outputs }}
