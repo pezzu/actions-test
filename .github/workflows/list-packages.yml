@@ -12,8 +12,8 @@ jobs:
               with:
                   node-version: "20"
             - name: List packages
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   npm ci --omit=dev
                   node ./list-packages.js
-              env:
-                  GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
