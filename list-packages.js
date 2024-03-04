@@ -2,9 +2,9 @@ import { Octokit } from "@octokit/rest";
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-const username = "django";
+const username = "pezzu";
 await octokit.rest.packages
-    .listPackagesForUser({ package_type: "container", username })
+    .listPackagesForUser({ username })
     .then(
         async ({ data }) =>
             await Promise.all(
