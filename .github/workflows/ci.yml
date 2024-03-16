@@ -21,6 +21,9 @@ jobs:
                   GITHUB_CONTEXT: ${{ toJson(github) }}
               run: echo "$GITHUB_CONTEXT"
 
+            - name: Print user information
+              run: id
+
             - name: Checkout
               uses: actions/checkout@v4
 
