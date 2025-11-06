@@ -1,0 +1,22 @@
+name: Commit Message Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+jobs:
+  validate-commit-messages:
+    runs-on: ubuntu-latest
+    name: Validate Commit Messages
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for commit range comparison
+      
+      - name: Validate commit messages
+        run: |
+          ./validate-commit-messages.sh main ${{ github.event.pull_request.head.ref }}
