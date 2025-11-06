@@ -1,34 +1,34 @@
 name: CI
 
 on:
-    push:
-        branches:
-            - "main"
-        tags:
-            - "*"
+  push:
+    branches:
+      - "main"
+    tags:
+      - "*"
 
 env:
-    REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Print GitHub context
-              env:
-                  GITHUB_CONTEXT: ${{ toJson(github) }}
-              run: echo "$GITHUB_CONTEXT"
+    steps:
+      - name: Print GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
-            - name: Print user information
-              run: id
+      - name: Print user information
+        run: id
 
-            - name: Checkout
-              uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Extract metadata for Docker
-              id: meta
-              uses: docker/metadata-action@v5
-              with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}

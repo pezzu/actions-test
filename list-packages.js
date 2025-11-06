@@ -4,30 +4,28 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 const username = "pezzu";
 await octokit.rest.packages
-    .listPackagesForUser({ username })
-    .then(
-        async ({ data }) =>
-            await Promise.all(
-                data.map(
-                    async (container) =>
-                        await octokit.rest.packages
-                            .getAllPackageVersionsForPackageOwnedByUser({
-                                package_type: container.package_type,
-                                username,
-                                package_name: container.name,
-                            })
-                            .then(({ data }) =>
-                                data.map((image) => {
-                                    return {
-                                        container: container.name,
-                                        name: image.name,
-                                        tags:
-                                            image?.metadata?.container?.tags ??
-                                            [],
-                                    };
-                                })
-                            )
-                )
-            )
-    )
-    .then((result) => console.log(result.flat()));
+  .listPackagesForUser({ username })
+  .then(
+    async ({ data }) =>
+      await Promise.all(
+        data.map(
+          async (container) =>
+            await octokit.rest.packages
+              .getAllPackageVersionsForPackageOwnedByUser({
+                package_type: container.package_type,
+                username,
+                package_name: container.name,
+              })
+              .then(({ data }) =>
+                data.map((image) => {
+                  return {
+                    container: container.name,
+                    name: image.name,
+                    tags: image?.metadata?.container?.tags ?? [],
+                  };
+                }),
+              ),
+        ),
+      ),
+  )
+  .then((result) => console.log(result.flat()));
